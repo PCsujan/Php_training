@@ -1,71 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        body {
-            background-color: #0f172a;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
-    <div class="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company" class="mx-auto h-10 w-auto" />
-            <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-white">Sign in to your account</h2>
-        </div>
+  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+    <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Login</h2>
 
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="#" method="POST" class="space-y-6">
-
-                @csrf
-
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-100">Email address</label>
-                    <div class="mt-2">
-                        <input id="email" type="email" name="email" required autocomplete="email"
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-indigo-500 sm:text-sm" />
-                    </div>
-                </div>
-
-                <div>
-                    <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm font-medium text-gray-100">Password</label>
-                        <div class="text-sm">
-                            <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Forgot password?</a>
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <input id="password" type="password" name="password" required autocomplete="current-password"
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:outline-indigo-500 sm:text-sm" />
-                    </div>
-                </div>
-
-                <div>
-                    <button type="submit"
-                        class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-                        Sign in
-                    </button>
-                </div>
-            </form>
-
-            <p class="mt-10 text-center text-sm text-gray-400">
-                Not a member?
-                <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Start a 14 day free trial</a>
-            </p>
-        </div>
+    @if ($errors->any())
+    <div class="bg-red-100 text-red-700 p-3 rounded md-4">
+      <ul class="list-disc pl-5">
+        @foreach ($errors->all() as $error )
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
     </div>
+    
+    @endif
+
+    <form action="{{ route('login.submit') }}" method="post">
+      @csrf
+      <!-- Email -->
+      <div class="mb-4">
+        <label class="block text-gray-600 font-medium mb-1">Email</label>
+        <input type="email" name="email" placeholder="Enter your email"
+               class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Password -->
+      <div class="mb-6">
+        <label class="block text-gray-600 font-medium mb-1">Password</label>
+        <input type="password" name="password" placeholder="Enter your password"
+               class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+              class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+        Login
+      </button>
+    </form>
+
+    <!-- Footer Links -->
+    <p class="text-center text-gray-600 text-sm mt-6">
+      Don't have an account? 
+      <a href="#" class="text-blue-600 hover:underline">Sign Up</a>
+    </p>
+  </div>
 
 </body>
-
 </html>
