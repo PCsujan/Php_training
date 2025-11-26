@@ -20,22 +20,23 @@ class AuthController extends Controller
     {
         // dd($request->all());
         $request->validate([
-            'email'=> 'required|email',
-            'password'=> 'required|string|min:6',
-            ]);
-
-            if(Auth::attempt( $request->only ('email','password'))){
-                $request->session()->regenerate();
-                return redirect()->intended(route('dashboard'));
-            }
-            return back()->withErrors([
-                'email'=> 'Invalid credentails',
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
         ]);
 
-        public function logout(Request $request) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('logout'));
+            return redirect()->intended(route('dashboard'));
         }
-    }   
+        return back()->withErrors([
+            'email' => 'Invalid credentails',
+        ]);
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('Login');
+    }
 }
-

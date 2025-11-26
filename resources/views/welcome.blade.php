@@ -20,7 +20,6 @@
         @endforeach
       </ul>
     </div>
-    
     @endif
 
     <form action="{{ route('login.submit') }}" method="post">
