@@ -3,22 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Courses;
+use App\Models\Teacher;
 
 class Subject extends Model
 {
     protected $fillable = [
-        'subject_name',
         'course_id',
-        'teacher_id'
+        'subject_name',
+        'subject_code',
+        'credit_hours',
+        'teacher_id',
     ];
-    // Course relationship
-    public function course()  // lowercase, not Courses
+    public function course()
     {
-        return $this->belongsTo(\App\Models\Courses::class, 'course_id'); // foreign key
+        return $this->belongsTo(Courses::class);
     }
-    // Teacher relationship
+
     public function teacher()
     {
-        return $this->belongsTo(\App\Models\Teacher::class, 'teacher_id');
+        return $this->belongsTo(Teacher::class);
     }
 }

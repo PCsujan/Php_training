@@ -9,17 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('exam_name');
             $table->unsignedBigInteger('course_id');
-            $table->integer('exam_year');
-            $table->integer('exam_term');
+            $table->string('exam_year');
+            $table->string('exam_term');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
+
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

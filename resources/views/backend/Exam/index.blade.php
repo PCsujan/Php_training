@@ -1,4 +1,5 @@
 @extends('backend.master')
+
 @push('style')
 <style>
     .subject-wrapper {
@@ -7,7 +8,6 @@
         padding: 20px;
         font-family: 'Arial', sans-serif;
         position: relative;
-        /* To position the button absolutely inside this container */
     }
 
     .subject-header {
@@ -17,7 +17,6 @@
         margin-bottom: 20px;
     }
 
-
     .subject-wrapper h2 {
         font-size: 2em;
         font-weight: bold;
@@ -25,7 +24,6 @@
         margin: 0;
     }
 
-    /* Add New teacher button styling */
     .add-link {
         display: inline-block;
         padding: 10px 20px;
@@ -44,7 +42,6 @@
         transform: translateY(-2px);
     }
 
-
     .alert-success {
         background-color: #fff3cd;
         color: #664d03;
@@ -55,7 +52,6 @@
         font-size: 1em;
     }
 
-
     table {
         width: 100%;
         border-collapse: collapse;
@@ -65,7 +61,6 @@
         overflow: hidden;
         background-color: #fff;
     }
-
 
     thead {
         background-color: #f2f2f2;
@@ -88,18 +83,10 @@
         background-color: #f1f1f1;
     }
 
-
     td {
         padding: 12px 15px;
         font-size: 0.95em;
         color: #555;
-    }
-
-
-    td.text-center {
-        text-align: center;
-        font-style: italic;
-        color: #999;
     }
 
     @media (max-width: 768px) {
@@ -150,35 +137,54 @@
 @section('content')
 <div class="subject-wrapper">
     <div class="subject-header">
-         <h2>Subjects List</h2>
-         <a href="{{ route('subjects.create') }}" class="add-link">+ Add New Subject</a>
+        <h2>Exams List</h2>
+        <a href="{{ route('exams.create') }}" class="add-link">+ Add New Exam</a>
     </div>
-   
+
     @if(session('success'))
         <div class="alert alert-success mt-3">{{ session('success') }}</div>
     @endif
 
     <table border="1" cellpadding="10">
-        <tr>
-            <th>ID</th>
-            <th>Subject</th>
-            <th>Code</th>
-            <th>Credit</th>
-            <th>Course</th>
-            <th>Teacher</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Exam Name</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Term</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-        @foreach($subjects as $s)
-        <tr>
-            <td>{{ $s->id }}</td>
-            <td>{{ $s->subject_name }}</td>
-            <td>{{ $s->subject_code }}</td>
-            <td>{{ $s->credit_hours }}</td>
-            <td>{{ $s->course->course_name ?? 'N/A' }}</td>
-            <td>{{ $s->teacher->first_name ?? '' }} {{ $s->teacher->last_name ?? '' }}</td>
-        </tr>
+        <tbody>
+        @foreach($exams as $exam)
+            <tr>
+                <td>{{ $exam->id }}</td>
+                <td>{{ $exam->exam_name }}</td>
+                <td>{{ $exam->course->course_name ?? 'N/A' }}</td>
+                <td>{{ $exam->exam_year }}</td>
+                <td>{{ $exam->exam_term }}</td>
+                <td>{{ $exam->start_date }}</td>
+                <td>{{ $exam->end_date }}</td>
+
+                <td>
+                    <a href="{{ route('exams.edit', $exam->id) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                    <form action="{{ route('exams.destroy', $exam->id) }}" 
+                          method="POST" 
+                          style="display:inline-block"
+                          onsubmit="return confirm('Are you sure you want to delete this exam?');">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
         @endforeach
+        </tbody>
     </table>
 </div>
 @endsection
-

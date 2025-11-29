@@ -1,7 +1,121 @@
 @extends('backend.master')
 
+@push('style')
+<style>
+.form-wrapper {
+    background: #fff7b3; 
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 40px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-wrapper h2 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #4a4a00;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4a4a00;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e6d267;
+    border-radius: 8px;
+    background-color: #fffbe0;
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #d4b300;
+    box-shadow: 0 0 8px rgba(212, 179, 0, 0.3);
+    outline: none;
+}
+
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-success {
+    background-color: #e0b100;
+    color: #000;
+}
+
+.btn-success:hover {
+    background-color: #c49a00;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #b8b8b8;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #999;
+    transform: translateY(-2px);
+}
+
+
+.alert-danger {
+    background-color: #ffe3e3;
+    border: 1px solid #ffb3b3;
+    color: #900;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-danger ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.alert-danger li {
+    margin-bottom: 8px;
+}
+
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .form-wrapper {
+        padding: 20px 15px;
+    }
+}
+</style>
+@endpush
+
 @section('content')
-<div class="container">
+<div class="from-wrapper">
     <h2>Add New Teacher</h2>
 
     @if ($errors->any())
@@ -29,15 +143,7 @@
             <label>Last Name</label>
             <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}" required>
         </div>
-        <div class="mb-3">
-            <label>Gender</label>
-            <select name="gender" class="form-control" required>
-                <option value="">Select Gender</option>
-                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
-                <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
-            </select>
-        </div>
+        
         <div class="mb-3">
             <label>Qualification</label>
             <input

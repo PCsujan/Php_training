@@ -167,6 +167,8 @@
             color: #4b79ff;
             text-decoration: none;
         }
+
+        */
     </style>
     @stack('style')
 </head>
@@ -193,18 +195,17 @@
 
     <!-- SIDEBAR -->
     <div class="sidebar">
-        <h2><i class="fa fa-bars"></i> Menu</h2>
-
         <div class="manu-item"><i class="fa fa-book"></i> Academic</div>
         <div class="submenu">
             <a href="{{ route('students.index') }}"><i class="fa-solid fa-graduation-cap"></i> Student</a>
             <a href="{{ route('teachers.index') }}"><i class="fa-solid fa-chalkboard-user"></i> Teacher</a>
             <a href="{{ route('courses.index') }}"><i class="fa-solid fa-book"></i>Courses</a>
             <a href="{{ route('subjects.index') }}"><i class="fa-solid fa-layer-group"></i> Subjects</a>
-            <a href="#"><i class="fa-solid fa-file-pen"></i> Exams</a>
-            <a href="#"><i class="fa-solid fa-square-poll-vertical"></i>Results</a>
+            <a href="{{ route('exams.index') }}"><i class="fa-solid fa-file-pen"></i> Exams</a>
+            <a href="{{ route('results.index') }}"><i class="fa-solid fa-square-poll-vertical"></i>Results</a>
+            <a href="{{ route('enrollments.index') }}"><i class="fa fa-calendar"></i> Enrollments</a>
             <a href="#"><i class="fa-solid fa-gear"></i>Setting</a>
-            <a href="#"><i class="fa fa-calendar"></i>acdemic calendar</a>
+
 
         </div>
 
@@ -225,11 +226,10 @@
         document.querySelectorAll(".manu-item").forEach(item => {
             item.addEventListener("click", () => {
                 const submenu = item.nextElementSibling;
-                submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+                submenu.style.display = submenu.style.display === "none" ? "none" : "block";
             });
         });
     </script>
-
 </body>
 
 </html>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Enrollments;
 use Illuminate\Http\Request;
+use App\Models\Student;
+use App\Models\Courses;
 
 
 class EnrollmentsController extends Controller
@@ -14,6 +16,12 @@ class EnrollmentsController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('enrollments.index', compact('enrollments'));
+        return view('backend.enrollments.index', compact('enrollments'));
+    }
+    public function create()
+    {
+        $students = Student::all();
+        $courses = Courses::all();
+        return view('backend.enrollments.create', compact('students', 'courses'));
     }
 }

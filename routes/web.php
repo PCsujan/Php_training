@@ -9,6 +9,8 @@ use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\EnrollmentsController;
 use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamsController;
+use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication
@@ -31,3 +33,12 @@ Route::resource('courses', CoursesController::class);
 
 // Subjects
 Route::resource('subjects', SubjectController::class);
+
+// results
+Route::resource('results', ResultController::class);
+
+// exams
+Route::resource('exams', ExamsController::class);
+
+// enrollmemts
+Route::resource('enrollments', EnrollmentsController::class);

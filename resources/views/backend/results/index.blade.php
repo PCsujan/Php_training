@@ -1,4 +1,5 @@
 @extends('backend.master')
+
 @push('style')
 <style>
     .subject-wrapper {
@@ -7,7 +8,6 @@
         padding: 20px;
         font-family: 'Arial', sans-serif;
         position: relative;
-        /* To position the button absolutely inside this container */
     }
 
     .subject-header {
@@ -17,7 +17,6 @@
         margin-bottom: 20px;
     }
 
-
     .subject-wrapper h2 {
         font-size: 2em;
         font-weight: bold;
@@ -25,7 +24,6 @@
         margin: 0;
     }
 
-    /* Add New teacher button styling */
     .add-link {
         display: inline-block;
         padding: 10px 20px;
@@ -44,7 +42,6 @@
         transform: translateY(-2px);
     }
 
-
     .alert-success {
         background-color: #fff3cd;
         color: #664d03;
@@ -55,7 +52,6 @@
         font-size: 1em;
     }
 
-
     table {
         width: 100%;
         border-collapse: collapse;
@@ -65,7 +61,6 @@
         overflow: hidden;
         background-color: #fff;
     }
-
 
     thead {
         background-color: #f2f2f2;
@@ -88,18 +83,10 @@
         background-color: #f1f1f1;
     }
 
-
     td {
         padding: 12px 15px;
         font-size: 0.95em;
         color: #555;
-    }
-
-
-    td.text-center {
-        text-align: center;
-        font-style: italic;
-        color: #999;
     }
 
     @media (max-width: 768px) {
@@ -150,35 +137,62 @@
 @section('content')
 <div class="subject-wrapper">
     <div class="subject-header">
-         <h2>Subjects List</h2>
-         <a href="{{ route('subjects.create') }}" class="add-link">+ Add New Subject</a>
+        <h2>Results List</h2>
+        <a href="{{ route('results.create') }}" class="add-link">+ Add New Result</a>
     </div>
-   
+
     @if(session('success'))
         <div class="alert alert-success mt-3">{{ session('success') }}</div>
     @endif
 
     <table border="1" cellpadding="10">
-        <tr>
-            <th>ID</th>
-            <th>Subject</th>
-            <th>Code</th>
-            <th>Credit</th>
-            <th>Course</th>
-            <th>Teacher</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Exam</th>
+                <th>Subject</th>
+                <th>Obtained Marks</th>
+                <th>Full Marks</th>
+                <th>Pass Marks</th>
+                <th>Grade</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-        @foreach($subjects as $s)
-        <tr>
-            <td>{{ $s->id }}</td>
-            <td>{{ $s->subject_name }}</td>
-            <td>{{ $s->subject_code }}</td>
-            <td>{{ $s->credit_hours }}</td>
-            <td>{{ $s->course->course_name ?? 'N/A' }}</td>
-            <td>{{ $s->teacher->first_name ?? '' }} {{ $s->teacher->last_name ?? '' }}</td>
-        </tr>
-        @endforeach
+        <tbody>
+            @foreach($results as $r)
+            <tr>
+                <td>{{ $r->id }}</td>
+                <td>{{ $r->student->first_name ?? '' }} {{ $r->student->last_name ?? '' }}</td>
+                <td>{{ $r->exam->exam_name ?? 'N/A' }}</td>
+                <td>{{ $r->subject->subject_name ?? 'N/A' }}</td>
+                <td>{{ $r->obtained_marks }}</td>
+                <td>{{ $r->full_marks }}</td>
+                <td>{{ $r->pass_marks }}</td>
+                <td>{{ $r->grade }}</td>
+                <td>{{ $r->remarks }}</td>
+
+                <td>
+                    <a href="{{ route('results.edit', $r->id) }}" class="btn btn-warning btn-sm">Edit</a>
+
+                    <form action="{{ route('results.destroy', $r->id) }}"
+                          method="POST"
+                          style="display:inline-block"
+                          onsubmit="return confirm('Are you sure you want to delete this result?');">
+
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+            @endforeach
+        </tbody>
+
     </table>
 </div>
 @endsection
-

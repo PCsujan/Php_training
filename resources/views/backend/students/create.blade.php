@@ -2,55 +2,115 @@
 
 @push('style')
 <style>
+.form-wrapper {
+    background: #fff7b3; 
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 40px auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-wrapper h2 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #4a4a00;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4a4a00;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e6d267;
+    border-radius: 8px;
+    background-color: #fffbe0;
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    border-color: #d4b300;
+    box-shadow: 0 0 8px rgba(212, 179, 0, 0.3);
+    outline: none;
+}
+
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-success {
+    background-color: #e0b100;
+    color: #000;
+}
+
+.btn-success:hover {
+    background-color: #c49a00;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #b8b8b8;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #999;
+    transform: translateY(-2px);
+}
+
+
+.alert-danger {
+    background-color: #ffe3e3;
+    border: 1px solid #ffb3b3;
+    color: #900;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert-danger ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.alert-danger li {
+    margin-bottom: 8px;
+}
+
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
     .form-wrapper {
-        background: #fff7b3;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        width: 100%;
-        max-width: 750px;
-        margin: auto;
+        padding: 20px 15px;
     }
-
-    .form-wrapper h2 {
-        font-weight: bold;
-        color: #4a4a00;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    label {
-        font-weight: 600;
-        color: #4a4a00;
-    }
-
-    input, select, textarea {
-        background: #fffbe0;
-        border: 1px solid #e6d267;
-    }
-
-    .btn-success {
-        background: #e0b100;
-        border: none;
-        font-weight: 700;
-        color: black;
-    }
-
-    .btn-success:hover {
-        background: #c49a00;
-    }
-
-    .btn-secondary {
-        background: #b8b8b8;
-        border: none;
-        font-weight: bold;
-    }
-
-    .alert-danger {
-        background: #ffe3e3;
-        border: 1px solid #ffb3b3;
-        color: #900;
-    }
+}
 </style>
 @endpush
 

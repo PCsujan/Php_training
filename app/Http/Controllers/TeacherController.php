@@ -15,7 +15,7 @@ class TeacherController extends Controller
 
     public function create()
     {
-        return view('teachers.create');
+        return view('backend.teachers.create');
     }
 
 
@@ -23,11 +23,10 @@ class TeacherController extends Controller
     {
     
         $request->validate([
-            'student_code' => 'required|unique:students,student_code',
+            'teacher_code' => 'required|unique:teachers,teacher_code',
             'first_name'   => 'required',
             'last_name'    => 'required',
-            'gender'       => 'required|in:Male,Female,Other',
-            'email'        => 'required|email|unique:students,email',
+            'email'        => 'required|email|unique:teachers,email',
             'phone'        => 'required',
             'address'      => 'required',
             'qualification' => 'required',
