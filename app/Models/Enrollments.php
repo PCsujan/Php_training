@@ -13,7 +13,6 @@ class Enrollments extends Model
         'status'
     ];
 
-    // Relations
     public function student()
     {
         return $this->belongsTo(Student::class);
@@ -21,6 +20,6 @@ class Enrollments extends Model
 
     public function course()
     {
-        return $this->belongsTo(Courses::class);
+        return $this->belongsTo(Course::class);
     }
 }

@@ -129,8 +129,19 @@
 
         <div class="form-group">
             <label for="credit_hours">Credit Hours</label>
-            <input type="number" name="credit_hours" id="credit_hours" value="{{ old('credit_hours') }}" required>
+            <select name="credit_hours" id="credit_hours" required>
+                <option value="">-- Select Credit Hours --</option>
+                @foreach([1,2,3,4,5,6] as $hour)
+                <option value="{{ $hour }}" {{ old('credit_hours') == $hour ? 'selected' : '' }}>
+                    {{ $hour }} {{ Str::plural('Credit', $hour) }}
+                </option>
+                @endforeach
+            </select>
+            @error('credit_hours')
+            <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
+
 
         <div class="form-group">
             <label for="teacher_id">Teacher</label>

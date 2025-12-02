@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Exam;
 
 class Result extends Model
 {
@@ -26,7 +27,7 @@ class Result extends Model
     // Exam Relation
     public function exam()
     {
-        return $this->belongsTo(exams::class);
+        return $this->belongsTo(Exam::class);
     }
 
     // Subject Relation

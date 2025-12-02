@@ -206,7 +206,12 @@
             <a href="{{ route('enrollments.index') }}"><i class="fa fa-calendar"></i> Enrollments</a>
             <a href="#"><i class="fa-solid fa-gear"></i>Setting</a>
 
-
+        </div>
+        <div class="manu-item"><i class="fa fa-envelope"></i> Inbox</div>
+        <div class="submenu">
+            <a href="{{ route('contacts.inbox') }}">
+                <i class="fa-solid fa-inbox"></i> View Messages
+            </a>
         </div>
 
     </div>

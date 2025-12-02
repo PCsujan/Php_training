@@ -18,6 +18,6 @@ class Exam extends Model
     // Relationship: An exam belongs to one course
     public function course()
     {
-        return $this->belongsTo(Courses::class);
+        return $this->belongsTo(Course::class);
     }
 }

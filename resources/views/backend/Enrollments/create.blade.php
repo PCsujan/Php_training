@@ -143,7 +143,7 @@
         </div>
 
         <button type="submit">Save Enrollment</button>
-        <a href="{{ route('enrollments.index') }}" class="btn btn-secondary">Back</a>
+        <!-- <a href="{{ route('enrollments.index') }}" class="btn btn-secondary">Back</a> -->
     </form>
 </div>
 @endsection

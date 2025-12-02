@@ -142,7 +142,7 @@
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success mt-3">{{ session('success') }}</div>
+    <div class="alert alert-success mt-3">{{ session('success') }}</div>
     @endif
 
     <table border="1" cellpadding="10">
@@ -160,7 +160,7 @@
         </thead>
 
         <tbody>
-        @foreach($exams as $exam)
+            @foreach($exams as $exam)
             <tr>
                 <td>{{ $exam->id }}</td>
                 <td>{{ $exam->exam_name }}</td>
@@ -169,21 +169,24 @@
                 <td>{{ $exam->exam_term }}</td>
                 <td>{{ $exam->start_date }}</td>
                 <td>{{ $exam->end_date }}</td>
-
                 <td>
-                    <a href="{{ route('exams.edit', $exam->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ route('exams.edit', $exam->id) }}" class="btn btn-primary btn-sm">Edit</a>
 
-                    <form action="{{ route('exams.destroy', $exam->id) }}" 
-                          method="POST" 
-                          style="display:inline-block"
-                          onsubmit="return confirm('Are you sure you want to delete this exam?');">
+
+                    <!-- Delete Button -->
+                    <form action="{{ route('exams.destroy', $exam->id) }}" method="POST"
+                        style="display:inline-block;"
+                        onsubmit="return confirm('Are you sure you want to delete this Exam?');">
                         @csrf
                         @method('DELETE')
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
+
+
+
                 </td>
             </tr>
-        @endforeach
+            @endforeach
         </tbody>
     </table>
 </div>

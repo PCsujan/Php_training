@@ -11,14 +11,15 @@ use function Laravel\Prompts\form;
 class AuthController extends Controller
 {
 
-    //
+    // Show login page
     public function showLoginForm()
     {
-        return view(view: 'welcome');
+        return view('auth.login'); // ✅ Correct login view
     }
+
+    // Handle login form submission
     public function Submitlogin(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -28,15 +29,18 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->intended(route('dashboard'));
         }
+
         return back()->withErrors([
-            'email' => 'Invalid credentails',
+            'email' => 'Invalid credentials',
         ]);
     }
+
+    // Logout user
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('Login');
+        return redirect()->route('login');
     }
 }

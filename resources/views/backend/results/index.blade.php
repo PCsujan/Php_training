@@ -142,7 +142,7 @@
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success mt-3">{{ session('success') }}</div>
+    <div class="alert alert-success mt-3">{{ session('success') }}</div>
     @endif
 
     <table border="1" cellpadding="10">
@@ -173,20 +173,27 @@
                 <td>{{ $r->pass_marks }}</td>
                 <td>{{ $r->grade }}</td>
                 <td>{{ $r->remarks }}</td>
-
                 <td>
-                    <a href="{{ route('results.edit', $r->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{{ route('results.edit', $r->id) }}" class="btn btn-primary btn-sm">Edit</a>
 
-                    <form action="{{ route('results.destroy', $r->id) }}"
-                          method="POST"
-                          style="display:inline-block"
-                          onsubmit="return confirm('Are you sure you want to delete this result?');">
 
+                    <!-- Delete Button -->
+                    <form action="{{ route('results.destroy', $r->id) }}" method="POST"
+                        style="display:inline-block;"
+                        onsubmit="return confirm('Are you sure you want to delete this student?');">
                         @csrf
                         @method('DELETE')
-
-                        <button class="btn btn-danger btn-sm">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
+
+                    <a href="{{ route('results.print', $r->student_id)}}"
+                        class="btn btn-info btn-sm" target="_blank">
+                        Print Marksheet
+                    </a>
+
+
+
+
                 </td>
 
             </tr>

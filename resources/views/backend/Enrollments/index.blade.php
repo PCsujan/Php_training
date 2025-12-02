@@ -154,21 +154,32 @@
             <th>Course</th>
             <th>Year</th>
             <th>Status</th>
+            <th>Actions</th>
         </tr>
 
         @foreach($enrollments as $e)
         <tr>
             <td>{{ $e->id }}</td>
 
-            {{-- combine student_id + student name --}}
-            <td>{{ $e->student->first_name }} {{ $e->student->last_name }}</td>
+            <td>{{ $e->student->first_name ?? 'N/A' }} {{ $e->student->last_name ?? '' }}</td>
 
-            {{-- combine course_id + course name --}}
-            <td>{{ $e->course->course_name }}</td>
+            <td>{{ $e->course->course_name ?? 'N/A' }}</td>
 
             <td>{{ $e->enrollment_year }}</td>
             <td>{{ $e->status }}</td>
+            <td>
+                <a href="{{ route('enrollments.edit', $e->id) }}" class="btn btn-primary btn-sm">Edit</a>
+
+                <form action="{{ route('enrollments.destroy', $e->id) }}" method="POST"
+                    style="display:inline-block;"
+                    onsubmit="return confirm('Are you sure you want to delete this enrollments?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
         </tr>
+
         @endforeach
     </table>
 </div>

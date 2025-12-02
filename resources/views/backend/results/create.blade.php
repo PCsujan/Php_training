@@ -102,7 +102,7 @@
     </div>
     @endif
 
-    <form action="{{ route('results.store') }}" method="POST">
+    <form action="{{ route('results.store') }}" method="POST" id="resultForm">
         @csrf
 
         <div class="form-group">
@@ -110,9 +110,7 @@
             <select name="student_id" id="student_id" required>
                 <option value="">Select Student</option>
                 @foreach($students as $student)
-                <option value="{{ $student->id }}" {{ old('student_id') == $student->id ? 'selected' : '' }}>
-                    {{ $student->first_name }} {{ $student->last_name }}
-                </option>
+                <option value="{{ $student->id }}">{{ $student->first_name }} {{ $student->last_name }}</option>
                 @endforeach
             </select>
         </div>
@@ -122,9 +120,7 @@
             <select name="exam_id" id="exam_id" required>
                 <option value="">Select Exam</option>
                 @foreach($exams as $exam)
-                <option value="{{ $exam->id }}" {{ old('exam_id') == $exam->id ? 'selected' : '' }}>
-                    {{ $exam->exam_name }}
-                </option>
+                <option value="{{ $exam->id }}">{{ $exam->exam_name }}</option>
                 @endforeach
             </select>
         </div>
@@ -134,40 +130,48 @@
             <select name="subject_id" id="subject_id" required>
                 <option value="">Select Subject</option>
                 @foreach($subjects as $subject)
-                <option value="{{ $subject->id }}" {{ old('subject_id') == $subject->id ? 'selected' : '' }}>
-                    {{ $subject->subject_name }}
-                </option>
+                <option value="{{ $subject->id }}">{{ $subject->subject_name }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="form-group">
+            <label for="semester">Semester</label>
+            <select name="semester" id="semester" required>
+                <option value="">Select Semester</option>
+                @for($i = 1; $i <= 6; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="obtained_marks">Obtained Marks</label>
-            <input type="number" name="obtained_marks" id="obtained_marks" value="{{ old('obtained_marks') }}" required>
+            <input type="number" name="obtained_marks" id="obtained_marks" required>
         </div>
 
         <div class="form-group">
             <label for="full_marks">Full Marks</label>
-            <input type="number" name="full_marks" id="full_marks" value="{{ old('full_marks') }}" required>
+            <input type="number" name="full_marks" id="full_marks" required>
         </div>
 
         <div class="form-group">
             <label for="pass_marks">Pass Marks</label>
-            <input type="number" name="pass_marks" id="pass_marks" value="{{ old('pass_marks') }}" required>
+            <input type="number" name="pass_marks" id="pass_marks" required>
         </div>
 
         <div class="form-group">
             <label for="grade">Grade</label>
-            <input type="text" name="grade" id="grade" value="{{ old('grade') }}" required>
+            <input type="text" name="grade" id="grade" required>
         </div>
 
         <div class="form-group">
             <label for="remarks">Remarks</label>
-            <input type="text" name="remarks" id="remarks" value="{{ old('remarks') }}">
+            <input type="text" name="remarks" id="remarks" required>
         </div>
 
         <button type="submit">Save Result</button>
-         <a href="{{ route('results.index') }}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('results.index') }}" class="add-link">Back</a>
     </form>
 </div>
 @endsection

@@ -1,25 +1,33 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Dashboardcontroller;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\EnrollmentsController;
-use App\Http\Controllers\ResultsController;
-use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\ResultController;
 use Illuminate\Support\Facades\Route;
 
-// Authentication
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('Login'); 
+// Welcome page
+Route::get('/', [ContactController::class, 'index'])->name('home');
+Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+Route::get('/contacts/inbox', [ContactController::class, 'inbox'])->name('contacts.inbox');
+
+// Login routes
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login'); // lowercase!
 Route::post('/login', [AuthController::class, 'Submitlogin'])->name('login.submit');
+
+// Logout route
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Dashboard
-Route::get('/dashboard', [Dashboardcontroller::class,'index'])->name('dashboard');
+// Dashboard (only accessible to logged-in users)
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('dashboard');
 
 // Students
 route::resource('students', StudentController::class);
@@ -29,13 +37,14 @@ route::resource('students', StudentController::class);
 Route::resource('teachers', TeacherController::class);
 
 // Courses
-Route::resource('courses', CoursesController::class);
+Route::resource('courses', CourseController::class);
 
 // Subjects
 Route::resource('subjects', SubjectController::class);
 
 // results
 Route::resource('results', ResultController::class);
+Route::get('results/print/{id}', [ResultController::class, 'print'])->name('results.print');
 
 // exams
 Route::resource('exams', ExamsController::class);

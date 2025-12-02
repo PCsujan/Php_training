@@ -130,7 +130,7 @@
 
 
     <form action="{{ route('courses.store') }}" method="post">
-         @csrf
+        @csrf
 
         <div class="mb-3">
             <label>Course Code</label>
@@ -146,9 +146,17 @@
 
         <div class="mb-3">
             <label>Duration (Years)</label>
-            <input type="number" name="duration_years" class="form-control" value="{{ old('duration_years') }}" required>
+            <select name="duration_years" class="form-control" required>
+                <option value="">-- Select Duration --</option>
+                @foreach([1, 2, 3, 4] as $year)
+                <option value="{{ $year }}" {{ old('duration_years') == $year ? 'selected' : '' }}>
+                    {{ $year }} {{ Str::plural('Year', $year) }}
+                </option>
+                @endforeach
+            </select>
             @error('duration_years') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
+
         <button type="submit" class="btn btn-success">Save courses</button>
         <a href="{{ route('courses.index') }}" class="btn btn-secondary">Back</a>
 

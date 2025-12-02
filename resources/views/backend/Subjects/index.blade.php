@@ -150,35 +150,44 @@
 @section('content')
 <div class="subject-wrapper">
     <div class="subject-header">
-         <h2>Subjects List</h2>
-         <a href="{{ route('subjects.create') }}" class="add-link">+ Add New Subject</a>
+        <h2>Subjects List</h2>
+        <a href="{{ route('subjects.create') }}" class="add-link">+ Add New Subject</a>
     </div>
-   
+
     @if(session('success'))
-        <div class="alert alert-success mt-3">{{ session('success') }}</div>
+    <div class="alert alert-success mt-3">{{ session('success') }}</div>
     @endif
 
     <table border="1" cellpadding="10">
         <tr>
             <th>ID</th>
+            <th>subjectCode</th>
             <th>Subject</th>
-            <th>Code</th>
             <th>Credit</th>
             <th>Course</th>
             <th>Teacher</th>
+            <th>Actions</th>
         </tr>
 
         @foreach($subjects as $s)
         <tr>
             <td>{{ $s->id }}</td>
-            <td>{{ $s->subject_name }}</td>
             <td>{{ $s->subject_code }}</td>
+            <td>{{ $s->subject_name }}</td>
             <td>{{ $s->credit_hours }}</td>
             <td>{{ $s->course->course_name ?? 'N/A' }}</td>
             <td>{{ $s->teacher->first_name ?? '' }} {{ $s->teacher->last_name ?? '' }}</td>
+            <td>
+                <a href="{{ route('subjects.edit', $s->id) }}" class="btn btn-primary btn-sm">Edit</a>
+
+                <form action="{{ route('subjects.destroy', $s->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
         </tr>
         @endforeach
     </table>
 </div>
 @endsection
-

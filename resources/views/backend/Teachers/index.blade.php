@@ -172,6 +172,7 @@
             <th>Phone</th>
             <th>Qualification</th>
             <th>Address</th>
+            <th>Actions</th>
         </tr>
 
         @foreach($teachers as $t)
@@ -183,6 +184,18 @@
             <td>{{ $t->phone }}</td>
             <td>{{ $t->qualification }}</td>
             <td>{{ $t->address }}</td>
+            <td>
+                <a href="{{ route('teachers.edit', $t->id) }}" class="btn btn-primary btn-sm">Edit</a>
+
+                <form action="{{ route('teachers.destroy', $t->id) }}" method="POST"
+                    style="display:inline-block;"
+                    onsubmit="return confirm('Are you sure you want to delete this teacher?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+
         </tr>
         @endforeach
     </table>

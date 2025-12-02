@@ -165,6 +165,7 @@
             <th>Course_name</th>
             <th>course_Code</th>
             <th>Years</th>
+            <th>Actions</th>
         </tr>
 
         @foreach($courses as $c)
@@ -173,6 +174,20 @@
             <td>{{ $c->course_name }}</td>
             <td>{{ $c->course_code }}</td>
             <td>{{ $c->duration_years }}</td>
+            <td>
+                <a href="{{ route('courses.edit', $c->id) }}" class="btn btn-primary btn-sm">Edit</a>
+
+
+                <!-- Delete Button -->
+                <form action="{{ route('courses.destroy', $c->id) }}" method="POST"
+                    style="display:inline-block;"
+                    onsubmit="return confirm('Are you sure you want to delete this courses?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+
+            </td>
         </tr>
         @endforeach
     </table>

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Courses;
+use App\Models\Course;
 use App\Models\Teacher;
 
 class Subject extends Model
@@ -17,11 +17,12 @@ class Subject extends Model
     ];
     public function course()
     {
-        return $this->belongsTo(Courses::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
     }
+
 }
