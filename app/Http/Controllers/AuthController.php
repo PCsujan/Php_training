@@ -4,24 +4,56 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Termwind\Components\Raw;
-
-use function Laravel\Prompts\form;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;   
 
 class AuthController extends Controller
 {
-
-    // Show login page
-    public function showLoginForm()
+    /* ============================
+       SHOW REGISTER FORM
+    ============================ */
+    public function showRegisterForm()
     {
-        return view('auth.login'); // ✅ Correct login view
+        return view('auth.register');
     }
 
-    // Handle login form submission
+    /* ============================
+       HANDLE REGISTRATION
+    ============================ */
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => Hash::make($validated['password']), // ✅ correct hashing
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->intended('/')->with('success', 'Registration successful.');
+    }
+
+    /* ============================
+       SHOW LOGIN FORM
+    ============================ */
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    /* ============================
+       HANDLE LOGIN
+    ============================ */
     public function Submitlogin(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required|string|min:6',
         ]);
 
@@ -35,12 +67,15 @@ class AuthController extends Controller
         ]);
     }
 
-    // Logout user
+    /* ============================
+       LOGOUT
+    ============================ */
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
 }

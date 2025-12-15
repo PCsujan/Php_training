@@ -9,20 +9,12 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Welcome page
     public function index()
     {
         return view('welcome');
     }
-
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Store contact
     public function store(Request $request)
     {
         $request->validate([
@@ -31,31 +23,52 @@ class ContactController extends Controller
             'phone_number' => 'nullable|string|max:20',
             'request' => 'nullable|in:general,support,feedback,other',
             'message' => 'nullable|string',
+            'attachement' => 'nullable|file|max:2048'
         ]);
 
-        $contact = Contact::create($request->all());
+        $filePath = null;
+        if ($request->hasFile('attachement')) {
+            $filePath = $request->file('attachement')->store('contact_attachements', 'public');
+        }
+
+        $data = $request->all();
+        $data['attachement'] = $filePath;
+
+        $contact = Contact::create($data);
 
         Mail::to('venture.purushottam@gmail.com')->send(new AdminContactNotification($contact));
 
         return back()->with('success', 'Contact saved successfully!');
     }
 
-
-
-
+    // Inbox
     public function inbox()
     {
         $contacts = Contact::latest()->get();
-
         return view('backend.contacts.inbox', compact('contacts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Single Message
+    public function show($id)
     {
-        return view('auth.login');
+        $contact = Contact::findOrFail($id);
+        return view('backend.contacts.show', compact('contact'));
     }
 
+    // Delete
+    public function destroy($id)
+    {
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+        return redirect()->route('contacts.inbox')->with('success', 'Message deleted successfully!');
+    }
+
+    // Mark as Read
+    public function markRead($id)
+    {
+        $contact = Contact::findOrFail($id);
+        $contact->is_read = 1;
+        $contact->save();
+        return redirect()->back()->with('success', 'Message marked as read.');
+    }
 }
